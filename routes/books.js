@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
   var book_author = req.body.author;
   //Book.find({ $or: [{ name: { $regex: book_name, $options: 'i' } }, { author: { $regex: book_author, $options: 'i' } }] })
   //find all the books which have the same name//$regex: '.*' + book_name + '.*'
-  Book.find({name: { $regex: book_name, $options: 'i' } ,  author: { $regex: book_author, $options: 'i' } }).limit(50).then(function (books) {
+  Book.find({ $or: [{ name: { $regex: book_name, $options: 'i' } }, { author: { $regex: book_name, $options: 'i' } }] }).limit(50).then(function (books) {
     res.send(books);
     console.log(books);
   }
