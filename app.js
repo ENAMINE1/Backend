@@ -5,11 +5,19 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+
+//
+
 var indexRouter = require('./routes/index');
 var bookRouter = require('./routes/books');
-var homeRouter = require('./routes/home');
+var loginRouter = require('./routes/login');
+var dashRouter = require('./routes/dashboard');
+
+const cors = require('cors');
 
 var app = express();
+
+app.use(cors());
 
 // connect to mongodb
 //{ useNewUrlParser: true, useUnifiedTopology: true }
@@ -33,7 +41,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/books', bookRouter);
-app.use('/home', homeRouter);
+app.use('/login', loginRouter);
+app.use('/dash', dashRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
