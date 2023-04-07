@@ -8,20 +8,19 @@ router.get('/', function (req, res, next) {
     // console.log(req);
     // i want to acces the username in the body of the request
     // console.log(req.body.username);
-    var name = req.query.username;
-    User.find({username: name}).then(function (users) {
+    var id = req.query.id;
+    User.find({ _id: id }).then(function (users) {
         res.send(users);
         // console.log(users);
     }, function (err) {
         console.log(err);
     });
 });
-
-router.post('/', function (req, res, next) {
-    User.create(req.body).then(function (user) {
+// deleting a new user in database
+router.delete('/:id', function (req, res, next) {
+    User.findByIdAndRemove({ _id: req.params.id }).then(function (user) {
         res.send(user);
-        console.log(user);
     }).catch(next);
+    res.send({ type: 'DELETE' });
 });
-
 module.exports = router;

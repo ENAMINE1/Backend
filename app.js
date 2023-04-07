@@ -9,7 +9,9 @@ const mongoose = require('mongoose');
 //
 
 var indexRouter = require('./routes/index');
-var bookRouter = require('./routes/books');
+var userRouter = require('./routes/users');
+var employeeRouter = require('./routes/employee');
+// var adminRouter = require('./routes/admin');
 var loginRouter = require('./routes/login');
 var dashRouter = require('./routes/dashboard');
 
@@ -40,10 +42,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/books', bookRouter);
+// app.use('/admin', adminRouter);
+app.use('/employee', employeeRouter);
+app.use('/users', userRouter);
 app.use('/login', loginRouter);
 app.use('/dash', dashRouter);
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
