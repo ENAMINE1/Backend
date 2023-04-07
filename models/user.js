@@ -8,9 +8,7 @@ const userSchema = new Schema({
     phone: { type: String, required: [true, 'Phone field is required'] },
     favbooks: { type: Array },
     favauthors: { type: Array },
-    favgenres: { type: Array },
     favpublishers: { type: Array },
-    favseries: { type: Array },
 });
 
 const User = mongoose.model('user', userSchema);
