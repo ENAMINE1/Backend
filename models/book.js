@@ -10,13 +10,19 @@ const bookSchema = new Schema({
     name: { type: String, required: [true, 'Name field is required'] },
     author: { type: String, required: [true, 'Author field is required'] },
     format: { type: String, required: [true, 'Format field is required'] },
-    price: { type: String, required: [true, 'Price field is required'] },
+    price: { type: Number, required: [true, 'Price field is required'] },
     category: { type: String, required: [true, 'Category field is required'] },
     book_depository_stars: { type: String, required: [true, 'Book Depository Stars field is required'] },
-    currency: { type: String, required: [true, 'Currency field is required'] },
-    old_price: { type: String, required: [true, 'Old Price field is required'] },
     isbn: { type: String, required: [true, 'ISBN field is required'] },
-    img_paths: { type: String, required: [true, 'Image Paths field is required'] },
+    total:{type:Number,required:[true,'total required']},
+    owned:{type:Number,required:[true,'owned required']},
+    sold:{type:Number,required:[true,'sold required']},
+    past:{type:Array,required:[true,'past required']},
+    rack_no:{type:Number,required:[true,'rack_no required']},
+    publisher:{type:String,required:[true,'publishers required']},
+    request:{type:Number,required:[true,'requests required']},
+    threshold:{type:Number,required:[true,'threshold required']},
+    vendor:{type:String,required:[true,'vendor required']},
 });
 
 const Book = mongoose.model('book', bookSchema);
