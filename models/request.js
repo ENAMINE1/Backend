@@ -1,4 +1,4 @@
-const { default: mongoose } = require('mongoose');
+const { default: mongoose} = require('mongoose');
 const Schema = mongoose.Schema;
 
 /*creating book schema and model */
@@ -7,3 +7,7 @@ const RequestSchema = new Schema({
     author: { type: String, required: [true, 'Author field is required'] },
     publisher: { type: String, required: [true, 'Publisher field is required'] },
 })
+
+const Request = mongoose.model('request', RequestSchema);
+
+module.exports = Request;
