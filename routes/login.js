@@ -5,19 +5,17 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-    // console.log(req);
-    // i want to acces the username in the body of the request
-    // console.log(req.body.username);
-    var name = req.query.username;
-    User.find({username: name}).then(function (users) {
+    var name = req.body.username;
+    var type = req.body.usertype;
+    var password = req.body.userpassword;
+    User.find({ username: name, type: type, password: password }).then(function (users) {
         res.send(users);
-        // console.log(users);
     }, function (err) {
         console.log(err);
-    });
+    }).catch(next);
 });
-
-router.post('/', function (req, res, next) {
+// creating a new user in the database
+router.post('/signup', function (req, res, next) {
     User.create(req.body).then(function (user) {
         res.send(user);
         console.log(user);
