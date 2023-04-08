@@ -1,9 +1,10 @@
 var express = require('express');
-const {model} = require('mongoose');
+const { model } = require('mongoose');
 const Book = require('../models/book');
 const User = require('../models/user')
 const Purchase = require('../models/purchase');
-const Request = require('../models/request')
+const Request = require('../models/request');
+var nodemailer = require('nodemailer');
 var router = express.Router();
 
 
@@ -21,15 +22,17 @@ function makeid(length) {
 }
 /* GET users listing. */
 // Loading the webpage after login
-router.get('/', function (req, res, next) {
+router.get('/:userid', function (req, res, next) {
   var book_name = makeid(1);
-  console.log(book_name);
-
-  Book.find({ $or: [{ name: { $regex: book_name, $options: 'i' } }, { author: { $regex: book_name, $options: 'i' } }] }).limit(27).then(function (books) {
+  console.log(req.params.userid);
+  Book.find({ $or: [{ name: { $regex: book_name, $options: 'i' } }, { author: { $regex: book_name, $options: 'i' } }] }).limit(50).then(function (books, next) {
     res.send(books);
     console.log(books);
-  }
-  ).catch(next);
+  }, User.findById({ _id: req.params.userid }).then(function (user) {
+    res.send(user);
+    console.log(user);
+  }).catch(next)).catch(next);
+
 });
 
 // Handeling search request on the page
@@ -40,7 +43,7 @@ router.get('/search', function (req, res, next) {
     book_name = makeid(1);
   }
   console.log(book_name);
-  Book.find({ $or: [{ name: { $regex: book_name, $options: 'i' } }, { author: { $regex: book_name, $options: 'i' } }] }).limit(2).then(function (books) {
+  Book.find({ $or: [{ name: { $regex: book_name, $options: 'i' } }, { author: { $regex: book_name, $options: 'i' } }] }).limit(50).then(function (books) {
     res.send(books);
     // console.log(books);
   }
@@ -59,7 +62,7 @@ router.get('/search/:id', function (req, res, next) {
 //when the user clicks on purchase button then the request is sent to the server and the request is stored in the database
 router.post('/:userid/search/:id/purchase', function (req, res, next) {
   console.log(req.params);
-  Book.findById({ _id: req.params.id}).then(function (book) {
+  Book.findById({ _id: req.params.id }).then(function (book) {
     // delete book.image;
     // console.log(book);
     var book = book.toObject();
@@ -74,7 +77,7 @@ router.post('/:userid/search/:id/purchase', function (req, res, next) {
       // console.log(user);
       var purchase = { ...book, ...user }
       purchase.user_id = req.params.userid;
-      purchase.book_id = req.body.id;
+      purchase.book_id = req.params.id;
       Purchase.create(purchase).then(function (purchase) {
         res.send(purchase);
       }).catch(next);
@@ -87,9 +90,9 @@ router.post('/:userid/search/:id/purchase', function (req, res, next) {
 router.post('/books/request', function (req, res, next) {
   // console.log(req.params.id);
   console.log(req.body)
-  Book.find({ name: req.body.name, author : req.body.author}).then(function (book) {
+  Book.find({ name: req.body.name, author: req.body.author }).then(function (book) {
     if (book.length != 0) {
-      res.send({ type: 'Book already exists', exist:'true' });
+      res.send({ type: 'Book already exists', exist: 'true' });
     } else {
       Request.create(req.body).then(function (request) {
         res.send(request);

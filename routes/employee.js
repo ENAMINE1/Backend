@@ -7,7 +7,9 @@ const Purchase = require('../models/purchase');
 const Request = require('../models/request');
 
 // this functionality return you the list of books the users have purchased
-router.get('/', function (req, res, next) { });
+router.get('/', function (req, res, next) {
+  
+});
 
 
 router.get('/purchase', function (req, res, next) {

@@ -16,6 +16,8 @@ const PurchaseSchema = new Schema({
     price: { type: String, required: [true, 'Price field is required'] },
     category: { type: String, required: [true, 'Category field is required'] },
     isbn: { type: String, required: [true, 'ISBN field is required'] },
+    vendor: { type: String, required: [true, 'vendor required'] },
+    publisher:{type:String,required:[true,'publishers required']},
     username: { type: String, required: [true, 'Username field is required'] },
     email: { type: String, required: [true, 'Email field is required'] },
     phone: { type: String, required: [true, 'Phone field is required'] },

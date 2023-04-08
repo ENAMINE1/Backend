@@ -8,11 +8,26 @@ router.get('/', function (req, res, next) {
     var name = req.body.username;
     var type = req.body.usertype;
     var password = req.body.userpassword;
-    User.find({ username: name, type: type, password: password }).then(function (users) {
-        res.send(users);
-    }, function (err) {
-        console.log(err);
-    }).catch(next);
+    if (type == 'admin') {
+        Admin.find({ name: name, password: password }).then(function (admins) {
+            res.send(admins);
+        }, function (err) {
+            console.log(err);
+        }).catch(next);
+    } else if (type == 'employee') {
+        Employee.find({ name: name, password: password }).then(function (employees) {
+            res.send(employees);
+        }, function (err) {
+            console.log(err);
+        }).catch(next);
+    }
+    else {
+        User.find({ username: name, password: password }).then(function (users) {
+            res.send(users);
+        }, function (err) {
+            console.log(err);
+        }).catch(next);
+    }
 });
 // creating a new user in the database
 router.post('/signup', function (req, res, next) {
