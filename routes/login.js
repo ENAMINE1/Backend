@@ -2,6 +2,9 @@ const bodyParser = require('body-parser');
 var express = require('express');
 const User = require('../models/user');
 var router = express.Router();
+var nodemailer = require('nodemailer')
+require('dotenv').config()
+// console.log(process.env)
 
 /* GET users listing. */
 router.post('/', function (req, res, next) {
@@ -32,8 +35,32 @@ router.post('/', function (req, res, next) {
 // creating a new user in the database
 router.post('/signup', function (req, res, next) {
     User.create(req.body).then(function (user) {
-        res.send(user);
-        console.log(user);
+        res.send();
+        // console.log(user);
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                type: 'OAuth2',
+                user: process.env.MAIL_USERNAME,
+                pass: process.env.MAIL_PASSWORD,
+                clientId: process.env.OAUTH_CLIENTID,
+                clientSecret: process.env.OAUTH_CLIENT_SECRET,
+                refreshToken: process.env.OAUTH_REFRESH_TOKEN
+            }
+        });
+        let mailOptions = {
+            from: "kshashwat@gmail.com",
+            to: req.body.email,
+            subject: 'Thanky for Signing Up!',
+            text: 'Hi from your nodemailer project'
+        };
+        transporter.sendMail(mailOptions, function (err, data) {
+            if (err) {
+                console.log("Error " + err);
+            } else {
+                console.log("Email sent successfully");
+            }
+        });
     }).catch(next);
 });
 

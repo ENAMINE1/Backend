@@ -82,28 +82,6 @@ router.post('/:userid/search/:id/purchase', function (req, res, next) {
         res.send(purchase);
       }).catch(next);
       console.log(purchase);
-      var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'rahulyadav.sxs@gmail.com',
-          pass: 'Googlel43'
-        }
-      });
-
-      var mailOptions = {
-        from: 'rahulyadav.sxs@gmail.com',
-        to: 'sukanth2705@gmail.com',
-        subject: 'Sending Email using Node.js',
-        text: 'That was easy!'
-      };
-
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
     });
   }).catch(next);
 });
