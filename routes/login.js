@@ -4,7 +4,7 @@ const User = require('../models/user');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
+router.post('/', function (req, res, next) {
     var name = req.body.username;
     var type = req.body.usertype;
     var password = req.body.userpassword;
