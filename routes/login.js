@@ -10,32 +10,20 @@ router.post('/', function (req, res, next) {
     var password = req.body.userpassword;
     if (type == 'admin') {
         Admin.find({ name: name, password: password }).then(function (admins) {
-            if (admins.length != 0) {
-                res.send(admins);
-            } else {
-                req.send({ exist: "false" });
-            }
+            res.send(admins);
         }, function (err) {
             console.log(err);
         }).catch(next);
     } else if (type == 'employee') {
         Employee.find({ name: name, password: password }).then(function (employees) {
-            if (employees.length != 0) {
-                res.send(employees);
-            } else {
-                req.send({ exist: "false" });
-            }
+            res.send(employees);
         }, function (err) {
             console.log(err);
         }).catch(next);
     }
     else {
         User.find({ username: name, password: password }).then(function (users) {
-            if (users.length != 0) {
-                res.send(users);
-            } else {
-                req.send({ exist: "false" });
-            }
+            res.send(users);
         }, function (err) {
             console.log(err);
         }).catch(next);
