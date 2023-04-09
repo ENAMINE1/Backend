@@ -2,17 +2,18 @@ const express = require('express');
 const Request = require('../models/request');
 const router = express.Router();
 const Book=require('../models/book');
-const Vendor = require('../models/vendor');
+const Vendor=require('../models/vendor');
 
 router.get('/request', function (req, res, next) {
     Request.find({}).then(function (requests) {
         res.send(requests);
     });
- });
- router.get('/stat',(req,res,next)=>{
-    let book=req.query.name;
+});
+
+router.get('/stat/search/:id',(req,res,next)=>{
+    // let book=req.query.name;
     let array_res=[];
-    Book.find({name:book}).then((arr)=>{
+    Book.findById(_id=req.params.id).then((arr)=>{
         for(let i=0;i<arr.length;i++){
             var books=arr[i];
             var obj={
@@ -25,6 +26,13 @@ router.get('/request', function (req, res, next) {
             array_res.push(obj);
         };
         res.send(array_res);
+    });
+});
+
+ router.get('/stat/search',(req,res,next)=>{
+    let book=req.query.name;
+    Book.find({ name: { $regex: book, $options: 'i' } }).then((books)=>{
+        res.send(books);
     });
 });
  router.get('/threshold',(req,res,next)=>{
