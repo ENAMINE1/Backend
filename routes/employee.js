@@ -8,7 +8,7 @@ const Request = require('../models/request');
 var nodemailer = require('nodemailer')
 require('dotenv').config()
 
-// this functionality return you the list of books the users have purchased
+// this functionality retuhttps://docs.google.com/presentation/d/1KiSIVsid3F1CQHYSTBwPNaZlpahyN4fv3ikHjlF10Pc/edit?usp=sharingrn you the list of books the users have purchased
 router.get('/', function (req, res, next) {
 
 });
