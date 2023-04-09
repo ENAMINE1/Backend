@@ -22,16 +22,13 @@ function makeid(length) {
 }
 /* GET users listing. */
 // Loading the webpage after login
-router.get('/:userid', function (req, res, next) {
+router.get('/', function (req, res, next) {
   var book_name = makeid(1);
   console.log(req.params.userid);
   Book.find({ $or: [{ name: { $regex: book_name, $options: 'i' } }, { author: { $regex: book_name, $options: 'i' } }] }).limit(50).then(function (books, next) {
     res.send(books);
     console.log(books);
-  }, User.findById({ _id: req.params.userid }).then(function (user) {
-    res.send(user);
-    console.log(user);
-  }).catch(next)).catch(next);
+  }).catch(next);
 
 });
 

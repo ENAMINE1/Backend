@@ -1,5 +1,6 @@
 var express = require('express');
 const Book = require('../models/book');
+const User = require('../models/user')
 var router = express.Router();
 
 function makeid(length) {
@@ -19,9 +20,8 @@ router.get('/', function (req, res, next) {
 // send me a req query with username as parameter and the i will return random books and user details to show on the webpage
 
   var book_name = makeid(1);
-  Book.find({ $or: [{ name: { $regex: book_name, $options: 'i' } }, { author: { $regex: book_name, $options: 'i' } }] }).limit(2).then(function (books) {
+  Book.find({ $or: [{ name: { $regex: book_name, $options: 'i' } }, { author: { $regex: book_name, $options: 'i' } }] }).limit(50).then(function (books) {
     res.send(books);
-    console.log(books);
   }
   ).catch(next);
 });

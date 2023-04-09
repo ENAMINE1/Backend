@@ -49,10 +49,10 @@ router.post('/signup', function (req, res, next) {
             }
         });
         let mailOptions = {
-            from: "kshashwat@gmail.com",
+            from: "kshashwat.iit@gmail.com",
             to: req.body.email,
             subject: 'Thanky for Signing Up!',
-            text: 'Hi from your nodemailer project'
+            text: 'Welcome to Book Store!\n We are glad to have you on board. \n Happy Reading! \n\n Regards, \n Book Store Team \n Shashwat Kumar \n Sukanth E. \n Tanisq Choudhary \n'
         };
         transporter.sendMail(mailOptions, function (err, data) {
             if (err) {
