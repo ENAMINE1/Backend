@@ -9,6 +9,7 @@ const userSchema = new Schema({
     favbooks: { type: Array },
     favauthors: { type: Array },
     favpublishers: { type: Array },
+    purchases:{type:Array}
 });
 
 const User = mongoose.model('user', userSchema);

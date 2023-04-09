@@ -5,7 +5,7 @@ const Book = require('../models/book');
 const Vendor = require('../models/vendor');
 
 router.get('/request', function (req, res, next) {
-    Request.find({}).then(function (requests) {
+    Request.find({}).limit(50).then(function (requests) {
         res.send(requests);
     });
 });
@@ -31,7 +31,7 @@ router.get('/stat/search/:id', (req, res, next) => {
 
 router.get('/stat/search', (req, res, next) => {
     let book = req.query.name;
-    Book.find({ name: { $regex: book, $options: 'i' } }).then((books) => {
+    Book.find({ name: { $regex: book, $options: 'i' } }).limit(50).then((books) => {
         res.send(books);
     });
 });

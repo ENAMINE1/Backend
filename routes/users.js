@@ -5,6 +5,8 @@ const User = require('../models/user')
 const Purchase = require('../models/purchase');
 const Request = require('../models/request');
 var nodemailer = require('nodemailer');
+var Temp = require('../models/temp');
+const mongoose = require('mongoose');
 var router = express.Router();
 
 
@@ -59,28 +61,20 @@ router.get('/search/:id', function (req, res, next) {
 //when the user clicks on purchase button then the request is sent to the server and the request is stored in the database
 router.post('/:userid/search/:id/purchase', function (req, res, next) {
   console.log(req.params);
-  Book.findById({ _id: req.params.id }).then(function (book) {
-    // delete book.image;
-    // console.log(book);
-    var book = book.toObject();
-    delete book._id;
-    delete book.__v;
-    // console.log(book);
-    User.findById({ _id: req.params.userid }).then(function (user) {
-      // console.log(user);
-      var user = user.toObject();
-      delete user._id;
-      delete user.__v;
-      // console.log(user);
-      var purchase = { ...book, ...user }
-      purchase.user_id = req.params.userid;
-      purchase.book_id = req.params.id;
-      Purchase.create(purchase).then(function (purchase) {
-        res.send(purchase);
+  Book.findById({_id:req.params.id}).then((book)=>{
+    User.findById({_id:req.params.userid}).then((user)=>{
+      var temp={
+        'user_id':new mongoose.Types.ObjectId(req.params.userid),
+        'book_id':new mongoose.Types.ObjectId(req.params.id),
+        'username':user.username,
+        'name':book.name,
+        'author':book.author
+      };
+      Temp.create(temp).then((temp)=>{
+        res.send(temp);
       }).catch(next);
-      console.log(purchase);
     });
-  }).catch(next);
+  });
 });
 
 // creating a request for a new book
